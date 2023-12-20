@@ -121,6 +121,6 @@ class LetterController extends Controller
      */
     public function destroy(Letter $letter)
     {
-        //
+        
     }
 }

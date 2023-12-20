@@ -34,4 +34,8 @@ class Letter extends Model
     {
         return $this->belongsTo(User::class, 'notulis', 'id');
     }
+
+    public function letter_type(){
+        return $this->hasMany(letter_types::class);
+    }
 }

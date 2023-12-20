@@ -16,6 +16,7 @@ class letter_types extends Model
 
     public function letters()
     {
-        return $this->hasMany(Letter::class, 'letter_type_id');
+        return $this->hasMany(Letter::class, 'letter_type_id', 'id');
     }
+    
 }
