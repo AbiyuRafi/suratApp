@@ -116,4 +116,5 @@ class LetterTypesController extends Controller
         $fill = 'klasifikasi surat.xlsx';
         return Excel::download(new LetterTypeExport, $fill);
     }
+    
 }

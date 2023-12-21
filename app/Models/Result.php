@@ -14,6 +14,9 @@ class Result extends Model
         'notes',
         'presence_recipients',
     ];
+    protected $casts = [
+        'presence_recipients' => 'array',
+    ];
 
     public function letter()
     {

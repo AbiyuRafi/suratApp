@@ -96,7 +96,7 @@
 </head>
 
 <body>
-    <a href="{{ route('klasifikasi.download', $letters['id']) }}" class="btn-print">Cetak (.pdf)</a>
+    <a href="{{ route('result.download', $letters['id']) }}" class="btn-print">Cetak (.pdf)</a>
     <div id="letter-container">
         <header>
             <div class="row">
@@ -107,8 +107,8 @@
                     <h3 class="kablogo">SMK Wikrama Bogor</h3>
                     <p class="kecLogo">Manajemen dan bisnis <br>
                         Teknik Informasi dan Komunikasi <br>Pemasaran</p>
-                    <h6 class="alamatlogo">Jl. Soekarno-Hatta, No. 68, Telepon/Faximile (0298) 523024</h6>
-                    <h5 class="kodeposlogo"><strong>BERGAS 50552</strong></h5>
+                    <h6 class="alamatlogo">Jl. Raya Wangun Kel. Sindangsari Bogor</h6>
+                    <h5 class="kodeposlogo"><strong>Telp/Faks:(0251)8242411</strong></h5>
                 </div>
             </div>
         </header>
@@ -133,10 +133,10 @@
             </div>
             <div id="pembuka" class="row">&emsp; &emsp; &emsp; {!! $letters['content'] !!}</div>
             <div id="tempat-tgl">
-            
+                
             </div>
-           
             <div id="ttd" class="row">
+
                 <div class="col-md-4"></div>
                 <div class="col-md-4"></div>
                 <div class="col-md-4">

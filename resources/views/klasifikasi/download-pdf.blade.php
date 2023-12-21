@@ -100,14 +100,16 @@
         <header>
             <div class="row">
                 <div id="img" class="col-md-3">
-                    <img id="logo" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fsmkwikrama.sch.id%2F&psig=AOvVaw0fdocd0TMM9uW-fol8HcLN&ust=1703130448741000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCICBk8CNnYMDFQAAAAAdAAAAABAD/assets/img/logo.png" width="110" height="110" />
+                    <img id="logo"
+                        src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fsmkwikrama.sch.id%2F&psig=AOvVaw0fdocd0TMM9uW-fol8HcLN&ust=1703130448741000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCICBk8CNnYMDFQAAAAAdAAAAABAD/assets/img/logo.png"
+                        width="110" height="110" />
                 </div>
                 <div id="text-header" class="col-md-9">
                     <h3 class="kablogo">SMK Wikrama Bogor</h3>
                     <p class="kecLogo">Manajemen dan bisnis <br>
                         Teknik Informasi dan Komunikasi <br>Pemasaran</p>
-                    <h6 class="alamatlogo">Jl. Soekarno-Hatta, No. 68, Telepon/Faximile (0298) 523024</h6>
-                    <h5 class="kodeposlogo"><strong>BERGAS 50552</strong></h5>
+                        <h6 class="alamatlogo">Jl. Raya Wangun Kel. Sindangsari Bogor</h6>
+                        <h5 class="kodeposlogo"><strong>Telp/Faks:(0251)8242411</strong></h5>
                 </div>
             </div>
         </header>
@@ -120,31 +122,48 @@
                     Perihal : Undangan
                 </div>
                 <div id="tgl-srt" class="col-md-6">
-                    <p id="tls">Bergas, 30 April 2018</p>
-
+                    <p id="tls"> @php
+                        \Carbon\Carbon::setLocale('id_ID');
+                    @endphp
+                        {{ \Carbon\Carbon::parse($letters['created_at'])->translatedFormat('d F Y') }}</p>
                     <p class="alamat-tujuan">Kepada <br>Yth. Bapak/Ibu Terlampir<br />
                     </p>
                     <p class="alamat-tujuan">Ditempat
                     </p>
                 </div>
             </div>
-            <div id="pembuka" class="row">&emsp; &emsp; &emsp; {{ $letters['content'] }}</div>
+            <div id="pembuka" class="row">&emsp; &emsp; &emsp; {!! $letters['content'] !!}</div>
             <div id="tempat-tgl">
                 <table>
                     <tr>
                         <td>Hari</td>
                         <td>:</td>
-                        <td>Kamis</td>
+                        <td>
+                            @php
+                                \Carbon\Carbon::setLocale('id_ID');
+                                $createdDate = \Carbon\Carbon::parse($letters['created_at']);
+                                echo $createdDate->translatedFormat('l');
+                            @endphp
+                        </td>
                     </tr>
                     <tr>
                         <td>Tanggal</td>
                         <td>:</td>
-                        <td>28 Juni 2018</td>
+                        <td>
+                            @php
+                                \Carbon\Carbon::setLocale('id_ID');
+                                echo $createdDate->translatedFormat('d F Y');
+                            @endphp
+                        </td>
                     </tr>
                     <tr>
                         <td>Jam</td>
                         <td>:</td>
-                        <td>08.00 WIB</td>
+                        <td>
+                            @php
+                                echo $createdDate->format('H.i') . ' WIB';
+                            @endphp
+                        </td>
                     </tr>
                     <tr>
                         <td>Tempat</td>
@@ -164,10 +183,13 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <p id="camat"><strong>CAMAT BERGAS</strong></p>
-                    <div id="nama-camat"><strong><u>TRI MARTONO, SH, MM</u></strong><br />
-                        Pembina Tk. I<br />
-                        NIP. 196703221995031001</div>
+                    <p id="camat"><strong> Hormat kami</strong></p>
+                    <div id="nama-camat"><strong><u>Kepala SMK Wikrama</u></strong><br />
+                        <br />
+                        <br>
+                        <br>
+                        <br>
+                    (........)    </div>
                 </div>
             </div>
         </div>

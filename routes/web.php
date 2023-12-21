@@ -24,8 +24,6 @@ Route::middleware(['IsGuest'])->group(function () {
     Route::post('/login', [UserController::class, 'loginAuth'])->name('login.auth');
 });
 
-
-
 Route::get('/error-permission', function () {
     return view('error.permission');
 })->name('error.permission');
@@ -78,13 +76,19 @@ Route::prefix('/letters')->name('letters.')->group(function() {
     Route::get('/{id}', [LetterController::class, 'edit'])->name('edit');
     Route::patch('/{id}', [LetterController::class, 'update'])->name('update');
     Route::delete('/{id}', [LetterController::class, 'destroy'])->name('delete');
+    Route::get('/letters/export', [LetterController::class, 'export'])->name('export');
+    Route::get('/print/{id}/', [LetterController::class, 'show'])->name('print');
+    Route::get('/download/{id}', [LetterController::class, 'downloadPDF'])->name('download');
 });
 });
-
 
 Route::middleware(['IsLogin', 'IsGuru'])->group(function () {
-    Route::prefix('/user')->name('user.')->group(function() {
-
-    Route::get('/index', [LetterController::class, 'index'])->name('index');
+    Route::prefix('/result')->name('result.')->group(function() {
+        Route::get('/index', [LetterController::class, 'index'])->name('index');
+        Route::get('/result/{id}', [ResultController::class, 'create'])->name('create');
+        Route::post('/store', [ResultController::class, 'store'])->name('store');
+        Route::get('/exportExcel', [ResultController::class, 'exportExcel'])->name('export');
+        Route::get('/print/{id}/', [ResultController::class, 'show'])->name('print');
+        Route::get('/download/{id}', [ResultController::class, 'downloadPDF'])->name('download');
 });
 });

@@ -34,22 +34,22 @@
             <div class="wrap-login100">
                 <div class="login100-pic js-tilt" data-tilt>
                     <img src="images/img-01.png" alt="IMG">
+                    @if (Session::get('failed'))
+                    <div class="alert alert-danger">
+                        {{ Session::get('failed') }}
+                    </div>
+                @endif
+                @if (Session::get('logout'))
+                    <div class="alert alert-primary">
+                        {{ Session::get('logout') }}
+                    </div>
+                @endif
+                @if (Session::get('canAccess'))
+                    <div class="alert alert-danger">
+                        {{ Session::get('canAccess') }}
+                    </div>
+                @endif
                 </div>
-                @if (Session::get('failed'))
-                <div class="alert alert-danger">
-                    {{ Session::get('failed') }}
-                </div>
-            @endif
-            @if (Session::get('logout'))
-                <div class="alert alert-primary">
-                    {{ Session::get('logout') }}
-                </div>
-            @endif
-            @if (Session::get('canAccess'))
-                <div class="alert alert-danger">
-                    {{ Session::get('canAccess') }}
-                </div>
-            @endif
                 <form action="{{ route('login.auth') }}" method="POST" class="login100-form validate-form">
                     @csrf
                     <span class="login100-form-title">
@@ -57,8 +57,7 @@
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                        <input class="input100" type="text" name="email" placeholder="Email">
-                        {{-- <span class="focus-input100"></span> --}}
+                        <input class="input100" type="email" name="email" placeholder="Email">
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                         </span>

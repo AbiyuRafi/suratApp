@@ -83,7 +83,7 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <ul>
                                             <li>
-                                                <a class="nav-link" href="{{ route('user.index') }}">Data Surat Masuk</a>
+                                                <a class="nav-link" href="{{ route('result.index') }}">Data Surat Masuk</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -92,7 +92,6 @@
                         @endif
                     </div>
                 </div>
-
             </nav>
         </div>
     </div>

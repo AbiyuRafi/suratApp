@@ -30,7 +30,6 @@
         .text-header {
             float: left;
             margin-left: 20px;
-            /* Adjust the margin as needed */
         }
 
         .row {
@@ -96,35 +95,38 @@
 </head>
 
 <body>
-    <a href="{{ route('klasifikasi.download', $letters['id']) }}" class="btn-print">Cetak (.pdf)</a>
+
     <div id="letter-container">
         <header>
             <div class="row">
                 <div id="img" class="col-md-3">
-                    <img id="logo" src="{{ asset('assets/img/logo.png') }}" width="110" height="110" />
+                    <img id="logo"
+                        src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fsmkwikrama.sch.id%2F&psig=AOvVaw0fdocd0TMM9uW-fol8HcLN&ust=1703130448741000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCICBk8CNnYMDFQAAAAAdAAAAABAD/assets/img/logo.png"
+                        width="110" height="110" />
                 </div>
                 <div id="text-header" class="col-md-9">
                     <h3 class="kablogo">SMK Wikrama Bogor</h3>
                     <p class="kecLogo">Manajemen dan bisnis <br>
                         Teknik Informasi dan Komunikasi <br>Pemasaran</p>
-                    <h6 class="alamatlogo">Jl. Soekarno-Hatta, No. 68, Telepon/Faximile (0298) 523024</h6>
-                    <h5 class="kodeposlogo"><strong>BERGAS 50552</strong></h5>
+                    <h6 class="alamatlogo">Jl. Raya Wangun Kel. Sindangsari Bogor</h6>
+                    <h5 class="kodeposlogo"><strong>Telp/Faks:(0251)8242411</strong></h5>
                 </div>
             </div>
         </header>
+
         <div class="container">
             <hr class="garis1" />
             <div id="alamat" class="row">
                 <div id="lampiran" class="col-md-6">
-                    Nomor : {{ $letters['letter_type_id'] }} / <br />
-                    Perihal : Undangan
+                    Nomor : {{ $letters->letter_types ? $letters->letter_types->letter_code : '-' }}/SMK
+                    Wikrama/XII/2023 <br />
+                    Perihal : {{ $letters->letter_perihal ?? '-' }}
                 </div>
                 <div id="tgl-srt" class="col-md-6">
                     <p id="tls"> @php
                         \Carbon\Carbon::setLocale('id_ID');
                     @endphp
-                        {{ \Carbon\Carbon::parse($letters->created_at)->translatedFormat('d F Y') }}</p>
-
+                        {{ \Carbon\Carbon::parse($letters['created_at'])->translatedFormat('d F Y') }}</p>
                     <p class="alamat-tujuan">Kepada <br>Yth. Bapak/Ibu Terlampir<br />
                     </p>
                     <p class="alamat-tujuan">Ditempat
@@ -133,9 +135,7 @@
             </div>
             <div id="pembuka" class="row">&emsp; &emsp; &emsp; {!! $letters['content'] !!}</div>
             <div id="tempat-tgl">
-            
             </div>
-           
             <div id="ttd" class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4"></div>
@@ -146,7 +146,8 @@
                         <br>
                         <br>
                         <br>
-                    (........)    </div>
+                        (........)
+                    </div>
                 </div>
             </div>
         </div>

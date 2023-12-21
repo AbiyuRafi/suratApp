@@ -96,7 +96,7 @@
 </head>
 
 <body>
-    <a href="{{ route('klasifikasi.download', $letters['id']) }}" class="btn-print">Cetak (.pdf)</a>
+    <a href="{{ route('letters.download', $letters['id']) }}" class="btn-print">Cetak (.pdf)</a>
     <div id="letter-container">
         <header>
             <div class="row">
@@ -116,14 +116,11 @@
             <hr class="garis1" />
             <div id="alamat" class="row">
                 <div id="lampiran" class="col-md-6">
-                    Nomor : {{ $letters['letter_type_id'] }} / <br />
-                    Perihal : Undangan
+                    Nomor : {{ $letters->letter_types ? $letters->letter_types->letter_code : '-' }}/SMK Wikrama/XII/2023 <br />
+                    Perihal : {{ $letters->letter_perihal ?? '-' }}                    
                 </div>
                 <div id="tgl-srt" class="col-md-6">
-                    <p id="tls"> @php
-                        \Carbon\Carbon::setLocale('id_ID');
-                    @endphp
-                        {{ \Carbon\Carbon::parse($letters->created_at)->translatedFormat('d F Y') }}</p>
+                    <p id="tls">Bergas, 30 April 2018</p>
 
                     <p class="alamat-tujuan">Kepada <br>Yth. Bapak/Ibu Terlampir<br />
                     </p>
@@ -131,11 +128,8 @@
                     </p>
                 </div>
             </div>
-            <div id="pembuka" class="row">&emsp; &emsp; &emsp; {!! $letters['content'] !!}</div>
-            <div id="tempat-tgl">
             
-            </div>
-           
+        <div id="pembuka" class="row">&emsp; &emsp; &emsp; {!! $letters['content'] !!}</div>
             <div id="ttd" class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4"></div>

@@ -89,9 +89,6 @@
                                         </form>
                                     </div>
                                 </div>
-                                {{-- @endsection --}}
-
-
                                 <script>
                                     $(document).ready(function() {
                                         tinymce.init({

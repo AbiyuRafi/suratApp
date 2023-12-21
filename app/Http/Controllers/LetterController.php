@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LettersExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Letter;
 use App\Models\letter_types;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class LetterController extends Controller
 {
@@ -53,18 +57,22 @@ class LetterController extends Controller
             'letter_perihal' => 'required|min:3',
             'recipients' => 'required',
             'content' => 'required|min:3',
-            'attachment',
+            'attachment' => 'file',
             'notulis' => 'required',
         ]);
     
+        $attachment = $request->file('attachment')->store('attachment_directory', 'public');
+        $nama_file = basename($attachment);
+        
         Letter::create([
             'letter_type_id' => $request->input('letter_type_id'),
             'letter_perihal' => $request->input('letter_perihal'),
             'recipients' => $request->input('recipients'),
             'content' => $request->input('content'),
-            'attachment' => $request->input('attachment'),
+            'attachment' => $nama_file,
             'notulis' => $request->input('notulis'),
         ]);
+
     
         return redirect()->route('letters.index')->with('success', 'Surat berhasil ditambahkan');
     }
@@ -72,11 +80,33 @@ class LetterController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Letter $letter)
+    public function show($id)
     {
-        //
+        $letters = Letter::with('letter_types')->find($id);
+        
+        if (!$letters) {
+            abort(404);
+        }
+    
+        return view('letters.print', compact('letters'));
     }
+    
+    public function downloadPDF($id)
+    {
+        $letters = Letter::with('letter_types')->find($id);
+    
+        if (!$letters) {
+            abort(404);
+        }
 
+        view()->share('letters', $letters);
+        
+        // Panggil blade yang akan di-download 
+        $pdf = PDF::loadView('letters.download-pdf', compact('letters'));
+        
+        // Kembalikan atau hasilkan bentuk pdf dengan nama file tertentu
+        return $pdf->download('surat.pdf');
+    }
     /**
      * Show the form for editing the specified resource.
      */
@@ -119,8 +149,20 @@ class LetterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Letter $letter)
+    public function destroy($id)
     {
-        
+        Letter::where('id', $id)->delete();
+        return redirect()->route('letters.index')->with('warning', 'Berhasil Menghapus Data');
+    }
+
+    public function export()
+    {
+        $fill = 'surat.xlsx';
+        return Excel::download(new LettersExport, $fill);
+    }
+    public function exportExcel()
+    {
+        $fill = 'surat.xlsx';
+        return Excel::download(new LettersExport, $fill);
     }
 }

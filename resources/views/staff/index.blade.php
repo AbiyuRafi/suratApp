@@ -48,8 +48,8 @@
                                                     data-bs-target="#deleteModal{{ $user->id }}">Delete</button>
                                             </td>
                                         </tr>
-                                    </tbody>
                                     @endforeach
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -165,6 +165,8 @@
                             </div>
                         </div>
                     </footer>
+                </div>
+            </div>
         </main>
     </div>
 @endsection

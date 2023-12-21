@@ -20,7 +20,7 @@ class UserController extends Controller
     }
     public function index()
     {
-        $users = User::where('role', 'staff')->Paginate(7);
+        $users = User::where('role', 'staff')->Paginate(5);
         return view('staff.index', compact('users'));
     }
 
@@ -228,7 +228,7 @@ class UserController extends Controller
     public function loginAuth(Request $request)
     {
         $request->validate([
-            'email' => 'required|email:dns',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
