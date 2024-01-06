@@ -5,50 +5,77 @@ namespace App\Http\Controllers;
 use App\Exports\LettersExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Letter;
-use App\Models\letter_types;
+use App\Models\Letter_types;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Result;
 use Illuminate\Support\Facades\Storage;
 use PDF;
 
 class LetterController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Fungsi untuk mengonversi angka bulan menjadi angka Romawi.
      */
+    private function romanNumerals($number) {
+        $numerals = [
+            1 => 'I',
+            2 => 'II',
+            3 => 'III',
+            4 => 'IV',
+            5 => 'V',
+            6 => 'VI',
+            7 => 'VII',
+            8 => 'VIII',
+            9 => 'IX',
+            10 => 'X',
+            11 => 'XI',
+            12 => 'XII',
+        ];
 
-        public function page()
-        {
-            $staff = User::where('role', 'staff')->count();
-            $guru = User::where('role', 'guru')->count();
-            $islogin = auth()->id();
-            $notulis = Letter::where('notulis', $islogin)->count();
-            $letters = Letter::all()->count();
-            $letterTypes = Letter_types::count();
-        
-            return view('home', ['staff' => $staff, 'guru' => $guru, 'letterTypes' => $letterTypes,  'notulis' => $notulis,'letters' => $letters ]);
-        }
-
-        public function index()
-        {
-            $letters = Letter::with(['user', 'letter_types'])->paginate(5);
-            return view('letters.index', compact('letters'));
-        }
-        
-
+        return $numerals[$number] ?? '';
+    }
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan halaman dashboard.
      */
-    public function create()
+    public function page()
     {
-
-        $types = letter_types::all();
-        $gurus = User::where('role', 'guru')->get();
-        return view('letters.create', compact('types', 'gurus'));
+        $staff = User::where('role', 'staff')->count();
+        $guru = User::where('role', 'guru')->count();
+        $islogin = auth()->id();
+        $notulis = Letter::where('notulis', $islogin)->count();
+        $letters = Letter::count(); 
+        $letterTypes = Letter_types::count();
+        $result = Result::count();  
+    
+        return view('home', ['staff' => $staff, 'guru' => $guru, 'letterTypes' => $letterTypes, 'notulis' => $notulis, 'letters' => $letters, 'result' => $result]);
+    }
+    
+    /**
+     * Menampilkan daftar surat.
+     */
+    public function index()
+    {
+        $letters = Letter::with(['user', 'letter_types'])->paginate(5);
+        return view('letters.index', compact('letters'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menampilkan formulir untuk membuat surat baru.
+     */
+    public function create()
+    {
+        $types = Letter_types::all();
+        $gurus = User::where('role', 'guru')->get();
+
+        // Pemanggilan fungsi romanNumerals pada bagian create atau di tempat lain yang membutuhkannya
+        $romanMonth = $this->romanNumerals(date('m'));
+
+        return view('letters.create', compact('types', 'gurus', 'romanMonth'));
+    }
+
+    /**
+     * Menyimpan surat yang baru dibuat ke dalam penyimpanan.
      */
     public function store(Request $request)
     {
@@ -60,7 +87,7 @@ class LetterController extends Controller
             'attachment' => 'file',
             'notulis' => 'required',
         ]);
-    
+
         $attachment = $request->file('attachment')->store('attachment_directory', 'public');
         $nama_file = basename($attachment);
         
@@ -73,12 +100,11 @@ class LetterController extends Controller
             'notulis' => $request->input('notulis'),
         ]);
 
-    
         return redirect()->route('letters.index')->with('success', 'Surat berhasil ditambahkan');
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan halaman detail surat.
      */
     public function show($id)
     {
@@ -87,10 +113,16 @@ class LetterController extends Controller
         if (!$letters) {
             abort(404);
         }
-    
-        return view('letters.print', compact('letters'));
+
+        // Pemanggilan fungsi romanNumerals di dalam fungsi show
+        $romanMonth = $this->romanNumerals(date('m', strtotime($letters->created_at)));
+
+        return view('letters.print', compact('letters', 'romanMonth'));
     }
-    
+
+    /**
+     * Mengunduh surat dalam format PDF.
+     */
     public function downloadPDF($id)
     {
         $letters = Letter::with('letter_types')->find($id);
@@ -107,8 +139,9 @@ class LetterController extends Controller
         // Kembalikan atau hasilkan bentuk pdf dengan nama file tertentu
         return $pdf->download('surat.pdf');
     }
+
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan formulir untuk mengedit surat.
      */
     public function edit($id)
     {
@@ -120,7 +153,7 @@ class LetterController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Memperbarui surat dalam penyimpanan.
      */
     public function update(Request $request, $id)
     {
@@ -147,7 +180,7 @@ class LetterController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Menghapus surat dari penyimpanan.
      */
     public function destroy($id)
     {
@@ -155,11 +188,18 @@ class LetterController extends Controller
         return redirect()->route('letters.index')->with('warning', 'Berhasil Menghapus Data');
     }
 
+    /**
+     * Mengexport surat dalam format Excel.
+     */
     public function export()
     {
         $fill = 'surat.xlsx';
         return Excel::download(new LettersExport, $fill);
     }
+
+    /**
+     * Mengexport surat dalam format Excel (sama seperti fungsi export).
+     */
     public function exportExcel()
     {
         $fill = 'surat.xlsx';

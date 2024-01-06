@@ -44,7 +44,6 @@
                                             </tr>
                                         @endforeach
                                     </table>
-
                                     <div class="h6">Ringkasan Rapat:</div>
                                     <div class="mb-3">
                                         <textarea class="form-control" name="notes"></textarea>

@@ -45,7 +45,8 @@
                                     @foreach ($letters as $key => $letter)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                            <td>{{ $letter->letter_types ? $letter->letter_types->letter_code : '-' }}
+                                            <td>
+                                                {{ $letter->letter_types ? $letter->letter_types->letter_code : '-' }}/000{{ $letter->id }}/SMK Wikrama/{{ romawi($letter->created_at->format('m')) }}/{{ $letter->created_at->format('Y') }}
                                             </td>
                                             <td>{{ $letter->letter_perihal }}</td>
                                             <td>
@@ -78,7 +79,8 @@
                                                         @endif
                                                     @elseif (Auth::user()->role == 'guru')
                                                         @if (App\Models\Result::where('letter_id', $letter->id)->exists())
-                                                            <a href="{{ route('result.print', $letter['id']) }}" class="btn btn-success">Lihat Hasil Rapat</a>
+                                                            <a href="{{ route('result.print', $letter['id']) }}"
+                                                                class="btn btn-success">Lihat Hasil Rapat</a>
                                                         @else
                                                             <a href="{{ route('result.create', $letter->id) }}"
                                                                 class="btn btn-success">Buat Hasil Rapat</a>
