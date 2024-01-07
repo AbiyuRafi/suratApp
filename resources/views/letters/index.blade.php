@@ -46,7 +46,9 @@
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
                                             <td>
-                                                {{ $letter->letter_types ? $letter->letter_types->letter_code : '-' }}/000{{ $letter->id }}/SMK Wikrama/{{ romawi($letter->created_at->format('m')) }}/{{ $letter->created_at->format('Y') }}
+                                                {{ $letter->letter_types ? $letter->letter_types->letter_code : '-' }}/000{{ $letter->id }}/SMK
+                                                Wikrama/{{ romawi($letter->created_at->format('m')) }}I/{{ $letter->created_at->format('Y') }}
+
                                             </td>
                                             <td>{{ $letter->letter_perihal }}</td>
                                             <td>

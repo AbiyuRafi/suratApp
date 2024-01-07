@@ -23,6 +23,7 @@ class LetterTypeExport implements FromCollection, WithHeadings, WithMapping
             'No',
             'Kode Surat',
             'Klasifikasi Surat',
+            'Surat Tertaut'
         ];
     }
 
@@ -32,6 +33,7 @@ class LetterTypeExport implements FromCollection, WithHeadings, WithMapping
             $letter->id,
             $letter->letter_code,
             $letter->name_type,
+            $letter->letters->count(),
         ];
     }
 }

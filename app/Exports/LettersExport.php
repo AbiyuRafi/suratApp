@@ -25,19 +25,19 @@ class LettersExport implements FromCollection, WithMapping, WithHeadings
             'Perihal', 
             'Peserta',
             'Tentang Surat',
-            'Notulis',
         ];
     }
 
     public function map($letters): array
     {
         return [
-        $letters->id,
+            $letters->id,
             optional($letters->letter_types)->letter_code,
             $letters->letter_perihal,
             implode(', ', $letters->recipients),
-            $letters->content,
-            optional($letters->notulis)->name,
+            strip_tags($letters->content),
+            optional($letters->notulis)->name ?? '',
         ];
-    }    
+    }
+    
 }

@@ -100,16 +100,14 @@
         <header>
             <div class="row">
                 <div id="img" class="col-md-3">
-                    <img id="logo"
-                        src="assets/img/logo.png"
-                        width="110" height="110" />
+                    <img src="{{ public_path('/assets/img/logo.png') }}" width="110" height="110" />
                 </div>
                 <div id="text-header" class="col-md-9">
                     <h3 class="kablogo">SMK Wikrama Bogor</h3>
                     <p class="kecLogo">Manajemen dan bisnis <br>
                         Teknik Informasi dan Komunikasi <br>Pemasaran</p>
-                        <h6 class="alamatlogo">Jl. Raya Wangun Kel. Sindangsari Bogor</h6>
-                        <h5 class="kodeposlogo"><strong>Telp/Faks:(0251)8242411</strong></h5>
+                    <h6 class="alamatlogo">Jl. Raya Wangun Kel. Sindangsari Bogor</h6>
+                    <h5 class="kodeposlogo"><strong>Telp/Faks:(0251)8242411</strong></h5>
                 </div>
             </div>
         </header>
@@ -118,7 +116,10 @@
             <hr class="garis1" />
             <div id="alamat" class="row">
                 <div id="lampiran" class="col-md-6">
-                    Nomor : {{ $letters['letter_type_id'] }} / <br />
+                    Nomor :
+                    {{ $letters->letter_types ? $letters->letter_types->letter_code : '-' }}/000{{ $letters->id }}/SMK
+                    Wikrama/{{ romawi($letters->created_at->format('m')) }}{{ $letters->created_at->format('Y') }}
+                    <br />
                     Perihal : Undangan
                 </div>
                 <div id="tgl-srt" class="col-md-6">
@@ -147,7 +148,8 @@
                         <br>
                         <br>
                         <br>
-                    (........)    </div>
+                        (........)
+                    </div>
                 </div>
             </div>
         </div>

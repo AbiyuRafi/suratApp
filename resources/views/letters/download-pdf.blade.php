@@ -100,9 +100,7 @@
         <header>
             <div class="row">
                 <div id="img" class="col-md-3">
-                    <img id="logo"
-                        src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fsmkwikrama.sch.id%2F&psig=AOvVaw0fdocd0TMM9uW-fol8HcLN&ust=1703130448741000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCICBk8CNnYMDFQAAAAAdAAAAABAD/assets/img/logo.png"
-                        width="110" height="110" />
+                    <img class="logo" src="{{ public_path('/assets/img/logo.png') }}" width="110" height="110" />
                 </div>
                 <div id="text-header" class="col-md-9">
                     <h3 class="kablogo">SMK Wikrama Bogor</h3>
@@ -118,8 +116,10 @@
             <hr class="garis1" />
             <div id="alamat" class="row">
                 <div id="lampiran" class="col-md-6">
-                    Nomor : {{ $letters->letter_types ? $letters->letter_types->letter_code : '-' }}/SMK
-                    Wikrama/XII/2023 <br />
+                    Nomor :
+                    {{ $letters->letter_types ? $letters->letter_types->letter_code : '-' }}/000{{ $letters->id }}/SMK
+                    Wikrama/{{ romawi($letters->created_at->format('m')) }}{{ $letters->created_at->format('Y') }}
+                    <br>
                     Perihal : {{ $letters->letter_perihal ?? '-' }}
                 </div>
                 <div id="tgl-srt" class="col-md-6">

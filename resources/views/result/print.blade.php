@@ -116,7 +116,8 @@
             <hr class="garis1" />
             <div id="alamat" class="row">
                 <div id="lampiran" class="col-md-6">
-                    Nomor : {{ $letters['letter_type_id'] }} / <br />
+                    Nomor : {{ $letters->letter_types ? $letters->letter_types->letter_code : '-' }}/000{{ $letters->id }}/SMK
+                    Wikrama/{{ romawi($letters->created_at->format('m')) }}{{ $letters->created_at->format('Y') }} <br />
                     Perihal : Undangan
                 </div>
                 <div id="tgl-srt" class="col-md-6">

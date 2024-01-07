@@ -38,7 +38,7 @@
         }
 
         .kecLogo {
-            margin-left: 20px;
+            margin-left: 30px;
             font-size: 15px;
         }
 
@@ -103,12 +103,11 @@
                 <div id="img" class="col-md-3">
                     <img id="logo" src="{{ asset('assets/img/logo.png') }}" width="110" height="110" />
                 </div>
+                <h3 class="kablogo">SMK Wikrama Bogor</h3>
                 <div id="text-header" class="col-md-9">
-                    <h3 class="kablogo">SMK Wikrama Bogor</h3>
-                    <p class="kecLogo">Manajemen dan bisnis <br>
+                    <p class="kecLogo" style="margin-left: 90px">Manajemen dan bisnis <br>
                         Teknik Informasi dan Komunikasi <br>Pemasaran</p>
-                    <h6 class="alamatlogo">Jl. Soekarno-Hatta, No. 68, Telepon/Faximile (0298) 523024</h6>
-                    <h5 class="kodeposlogo"><strong>BERGAS 50552</strong></h5>
+                    <h5 class="kodeposlogo"><strong></strong></h5>
                 </div>
             </div>
         </header>
@@ -116,8 +115,11 @@
             <hr class="garis1" />
             <div id="alamat" class="row">
                 <div id="lampiran" class="col-md-6">
-                    Nomor : {{ $letters['letter_type_id'] }} / <br />
-                    Perihal : Undangan
+                    Nomor :
+                    {{ $letters->letter_types ? $letters->letter_types->letter_code : '-' }}/000{{ $letters->id }}/SMK
+                    Wikrama/{{ romawi($letters->created_at->format('m')) }}{{ $letters->created_at->format('Y') }}
+                    <br />
+                    Perihal : {{ $letters->letter_perihal ?? '-' }}
                 </div>
                 <div id="tgl-srt" class="col-md-6">
                     <p id="tls"> @php
@@ -133,9 +135,7 @@
             </div>
             <div id="pembuka" class="row">&emsp; &emsp; &emsp; {!! $letters['content'] !!}</div>
             <div id="tempat-tgl">
-            
             </div>
-           
             <div id="ttd" class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4"></div>
@@ -146,7 +146,8 @@
                         <br>
                         <br>
                         <br>
-                    (........)    </div>
+                        (........)
+                    </div>
                 </div>
             </div>
         </div>

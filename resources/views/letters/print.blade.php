@@ -96,7 +96,9 @@
 </head>
 
 <body>
-    <a href="{{ route('letters.download', $letters['id']) }}" class="btn-print">Cetak (.pdf)</a>
+    <a href="{{ route('letters.download', $letters['id']) }}" class="btn btn-print">Cetak (.pdf)</a>
+    <br>
+    <a href="/letters/index" class="btn btn-danger">kembali</a>
     <div id="letter-container">
         <header>
             <div class="row">
@@ -107,7 +109,9 @@
                     <h3 class="kablogo">SMK Wikrama Bogor</h3>
                     <p class="kecLogo">Manajemen dan bisnis <br>
                         Teknik Informasi dan Komunikasi <br>Pemasaran</p>
-                    <h6 class="alamatlogo">Jl. Soekarno-Hatta, No. 68, Telepon/Faximile (0298) 523024</h6>
+                    <h6 class="alamatlogo">Jalan Raya Wangun Kel. Sindangsari Kec. Bogor Timur Kota Bogor
+                        Telp./faks. (0251)8242411Website : www.smkwikrama
+                    </h6>
                 </div>
             </div>
         </header>
@@ -192,13 +196,13 @@
                 </table>
             </div> --}}
 
-            {{-- <div class="mb-3">
+        {{-- <div class="mb-3">
                 <p class="mb-2">Ringkasan: </p>
                 @if ($result && isset($result->notes))
                     {!! $result->notes !!}
                 @endif
             </div> --}}
-{{-- 
+        {{-- 
         </div> --}}
 
         <div class="mb-3">

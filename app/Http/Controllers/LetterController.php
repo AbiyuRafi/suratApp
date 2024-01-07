@@ -17,7 +17,7 @@ class LetterController extends Controller
     /**
      * Fungsi untuk mengonversi angka bulan menjadi angka Romawi.
      */
-    private function romanNumerals($number) {
+    private function romawi($number) {
         $numerals = [
             1 => 'I',
             2 => 'II',
@@ -68,8 +68,8 @@ class LetterController extends Controller
         $types = Letter_types::all();
         $gurus = User::where('role', 'guru')->get();
 
-        // Pemanggilan fungsi romanNumerals pada bagian create atau di tempat lain yang membutuhkannya
-        $romanMonth = $this->romanNumerals(date('m'));
+        // Pemanggilan fungsi romawi pada bagian create atau di tempat lain yang membutuhkannya
+        $romanMonth = $this->romawi(date('m'));
 
         return view('letters.create', compact('types', 'gurus', 'romanMonth'));
     }
@@ -114,8 +114,8 @@ class LetterController extends Controller
             abort(404);
         }
 
-        // Pemanggilan fungsi romanNumerals di dalam fungsi show
-        $romanMonth = $this->romanNumerals(date('m', strtotime($letters->created_at)));
+        // Pemanggilan fungsi romawi di dalam fungsi show
+        $romanMonth = $this->romawi(date('m', strtotime($letters->created_at)));
 
         return view('letters.print', compact('letters', 'romanMonth'));
     }
@@ -133,10 +133,8 @@ class LetterController extends Controller
 
         view()->share('letters', $letters);
         
-        // Panggil blade yang akan di-download 
         $pdf = PDF::loadView('letters.download-pdf', compact('letters'));
-        
-        // Kembalikan atau hasilkan bentuk pdf dengan nama file tertentu
+
         return $pdf->download('surat.pdf');
     }
 

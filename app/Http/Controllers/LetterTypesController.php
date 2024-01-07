@@ -61,7 +61,7 @@ class LetterTypesController extends Controller
     {
         $letters = Letter::find($id);
         return view('klasifikasi.print', compact('letters'));
-    }
+    }    
 
     public function downloadPDF($id)
     {
